@@ -9,6 +9,7 @@ from __future__ import absolute_import, print_function, unicode_literals
 from .blkcntnr import BlockItemContainer
 from .enum.style import WD_STYLE_TYPE
 from .oxml.simpletypes import ST_Merge
+from .bookmark import Bookmark
 from .shared import Inches, lazyproperty, Parented
 
 
@@ -19,6 +20,24 @@ class Table(Parented):
     def __init__(self, tbl, parent):
         super(Table, self).__init__(parent)
         self._element = self._tbl = tbl
+
+    def add_bookmark(self, id, name):
+        """
+        Adds a new bookmark mark on the table
+        :param id: the id of the bookmark
+        :param name: the name of the bookmark
+        """
+        bookmarkStart = self._tbl._add_bookmarkStart()
+        bookmarkStart.id = id
+        bookmarkStart.name = name
+        bookmarkEnd = self._tbl._add_bookmarkEnd()
+        bookmarkEnd.id = id
+
+    @property
+    def bookmark(self):
+        if self._tbl.bookmarkStart is None:
+            return None
+        return Bookmark(self._tbl.bookmarkStart, self)
 
     def add_column(self, width):
         """
@@ -196,20 +215,6 @@ class _Cell(BlockItemContainer):
     def __init__(self, tc, parent):
         super(_Cell, self).__init__(tc, parent)
         self._tc = tc
-
-    def add_bookmark_start(self, id, name):
-        """
-        Adds a new bookmark start mark on the paragraph
-        :param id: the id of the bookmark
-        :param name: the name of the bookmark
-        """
-        bookmarkStart = self._tc.add_bookmarkStart()
-        bookmarkStart.id = id
-        bookmarkStart.name = name
-
-    def add_bookmark_end(self, id):
-        bookmarkEnd = self._tc.add_bookmarkEnd()
-        bookmarkEnd.id = id
 
     def add_paragraph(self, text='', style=None):
         """

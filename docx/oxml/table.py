@@ -69,6 +69,11 @@ class CT_Tbl(BaseOxmlElement):
     """
     ``<w:tbl>`` element
     """
+    _tag_seq = (
+        'w:bookmarkStart', 'w:bookmarkEnd', 'w:tblPr', 'w:tblGrid', 'w:tr'
+    )
+    bookmarkStart = ZeroOrOne('w:bookmarkStart', _tag_seq[1:])
+    bookmarkEnd = ZeroOrOne('w:bookmarkEnd', _tag_seq[2:])
     tblPr = OneAndOnlyOne('w:tblPr')
     tblGrid = OneAndOnlyOne('w:tblGrid')
     tr = ZeroOrMore('w:tr')
@@ -331,8 +336,6 @@ class CT_Tc(BaseOxmlElement):
     """
     ``<w:tc>`` table cell element
     """
-    bookmarkStart = ZeroOrMore('w:bookmarkStart')
-    bookmarkEnd = ZeroOrMore('w:bookmarkEnd')
     tcPr = ZeroOrOne('w:tcPr')  # bunches of successors, overriding insert
     p = OneOrMore('w:p')
     tbl = OneOrMore('w:tbl')

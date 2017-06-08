@@ -30,4 +30,4 @@ class CT_BookmarkStart(CT_BookmarkRange):
     """
 
     r = ZeroOrMore('w:r')
-    name = RequiredAttribute('w:id', ST_String)
+    name = RequiredAttribute('w:name', ST_String)
