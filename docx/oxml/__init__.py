@@ -14,7 +14,7 @@ from .ns import NamespacePrefixedTag, nsmap
 
 # configure XML parser
 element_class_lookup = etree.ElementNamespaceClassLookup()
-oxml_parser = etree.XMLParser(remove_blank_text=True, resolve_entities=False)
+oxml_parser = etree.XMLParser(remove_blank_text=True)
 oxml_parser.set_element_class_lookup(element_class_lookup)
 
 
@@ -145,8 +145,14 @@ register_element_cls('w:tcW',        CT_TblWidth)
 register_element_cls('w:tr',         CT_Row)
 register_element_cls('w:vMerge',     CT_VMerge)
 
+from .bookmark import (
+    CT_BookmarkStart, CT_Markup
+)
+register_element_cls('w:bookmarkStart', CT_BookmarkStart)
+register_element_cls('w:bookmarkEnd', CT_Markup)
+
 from .text.font import (
-    CT_Color, CT_Fonts, CT_Highlight, CT_HpsMeasure, CT_RPr, CT_Underline,
+    CT_Color, CT_Fonts, CT_HpsMeasure, CT_RPr, CT_Underline,
     CT_VerticalAlignRun
 )
 register_element_cls('w:b',          CT_OnOff)
@@ -156,7 +162,6 @@ register_element_cls('w:color',      CT_Color)
 register_element_cls('w:cs',         CT_OnOff)
 register_element_cls('w:dstrike',    CT_OnOff)
 register_element_cls('w:emboss',     CT_OnOff)
-register_element_cls('w:highlight',  CT_Highlight)
 register_element_cls('w:i',          CT_OnOff)
 register_element_cls('w:iCs',        CT_OnOff)
 register_element_cls('w:imprint',    CT_OnOff)
@@ -181,9 +186,7 @@ register_element_cls('w:webHidden',  CT_OnOff)
 from .text.paragraph import CT_P
 register_element_cls('w:p', CT_P)
 
-from .text.parfmt import (
-    CT_Ind, CT_Jc, CT_PPr, CT_Spacing, CT_TabStop, CT_TabStops
-)
+from .text.parfmt import CT_Ind, CT_Jc, CT_PPr, CT_Spacing
 register_element_cls('w:ind',             CT_Ind)
 register_element_cls('w:jc',              CT_Jc)
 register_element_cls('w:keepLines',       CT_OnOff)
@@ -192,8 +195,6 @@ register_element_cls('w:pageBreakBefore', CT_OnOff)
 register_element_cls('w:pPr',             CT_PPr)
 register_element_cls('w:pStyle',          CT_String)
 register_element_cls('w:spacing',         CT_Spacing)
-register_element_cls('w:tab',             CT_TabStop)
-register_element_cls('w:tabs',            CT_TabStops)
 register_element_cls('w:widowControl',    CT_OnOff)
 
 from .text.run import CT_Br, CT_R, CT_Text

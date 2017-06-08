@@ -22,6 +22,20 @@ class Paragraph(Parented):
         super(Paragraph, self).__init__(parent)
         self._p = self._element = p
 
+    def add_bookmark_start(self, id, name):
+        """
+        Adds a new bookmark start mark on the paragraph
+        :param id: the id of the bookmark
+        :param name: the name of the bookmark
+        """
+        bookmarkStart = self._p.add_bookmarkStart()
+        bookmarkStart.id = id
+        bookmarkStart.name = name
+
+    def add_bookmark_end(self, id):
+        bookmarkEnd = self._p.add_bookmarkEnd()
+        bookmarkEnd.id = id
+
     def add_run(self, text=None, style=None):
         """
         Append a run to this paragraph containing *text* and having character

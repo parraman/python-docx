@@ -331,6 +331,8 @@ class CT_Tc(BaseOxmlElement):
     """
     ``<w:tc>`` table cell element
     """
+    bookmarkStart = ZeroOrMore('w:bookmarkStart')
+    bookmarkEnd = ZeroOrMore('w:bookmarkEnd')
     tcPr = ZeroOrOne('w:tcPr')  # bunches of successors, overriding insert
     p = OneOrMore('w:p')
     tbl = OneOrMore('w:tbl')
@@ -651,7 +653,7 @@ class CT_Tc(BaseOxmlElement):
         """
         The tbl element this tc element appears in.
         """
-        return self.xpath('./ancestor::w:tbl[position()=1]')[0]
+        return self.xpath('./ancestor::w:tbl')[0]
 
     @property
     def _tc_above(self):
@@ -675,7 +677,7 @@ class CT_Tc(BaseOxmlElement):
         """
         The tr element this tc element appears in.
         """
-        return self.xpath('./ancestor::w:tr[position()=1]')[0]
+        return self.xpath('./ancestor::w:tr')[0]
 
     @property
     def _tr_above(self):

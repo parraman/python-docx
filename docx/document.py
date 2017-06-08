@@ -28,6 +28,16 @@ class Document(ElementProxy):
         self._part = part
         self.__body = None
 
+    def get_last_bookmark(self):
+
+        index = 0
+        bookmarks = self._element.xpath('//w:bookmarkStart')
+        for b in bookmarks:
+            if b.id > index:
+                index = b.id
+
+        return index
+
     def add_heading(self, text='', level=1):
         """
         Return a heading paragraph newly added to the end of the document,
@@ -154,14 +164,6 @@ class Document(ElementProxy):
         document.
         """
         return Sections(self._element)
-
-    @property
-    def settings(self):
-        """
-        A |Settings| object providing access to the document-level settings
-        for this document.
-        """
-        return self._part.settings
 
     @property
     def styles(self):

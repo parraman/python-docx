@@ -197,6 +197,20 @@ class _Cell(BlockItemContainer):
         super(_Cell, self).__init__(tc, parent)
         self._tc = tc
 
+    def add_bookmark_start(self, id, name):
+        """
+        Adds a new bookmark start mark on the paragraph
+        :param id: the id of the bookmark
+        :param name: the name of the bookmark
+        """
+        bookmarkStart = self._tc.add_bookmarkStart()
+        bookmarkStart.id = id
+        bookmarkStart.name = name
+
+    def add_bookmark_end(self, id):
+        bookmarkEnd = self._tc.add_bookmarkEnd()
+        bookmarkEnd.id = id
+
     def add_paragraph(self, text='', style=None):
         """
         Return a paragraph newly added to the end of the content in this
